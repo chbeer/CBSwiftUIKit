@@ -23,7 +23,7 @@ public struct BottomToolbarItemGroup<V: View>: ToolbarContent {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         Text("xx")
             .toolbar {
                 BottomToolbarItemGroup() {

@@ -1,5 +1,5 @@
 //
-//  PrimaryToolbarItem.swift
+//  SecondaryToolbarItem.swift
 //  CBSwiftUIKit
 //
 //  Created by Christian Beer on 11.10.23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct PrimaryToolbarItem<L: View>: ToolbarContent {
+public struct SecondaryToolbarItem<L: View>: ToolbarContent {
     let action: () -> Void
     @ViewBuilder var label: () -> L
     
@@ -18,12 +18,11 @@ public struct PrimaryToolbarItem<L: View>: ToolbarContent {
 
     public var body: some ToolbarContent {
 #if canImport(UIKit)
-        ToolbarItem(placement: .navigationBarTrailing) {
+        ToolbarItem(placement: .navigationBarLeading) {
             button
-                .buttonStyle(.borderedProminent)
         }
 #else
-        ToolbarItem(placement: .primaryAction) {
+        ToolbarItem(placement: .secondaryAction) {
             button
         }
 #endif
@@ -39,10 +38,10 @@ public struct PrimaryToolbarItem<L: View>: ToolbarContent {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         Text("xxx")
             .toolbar(content: {
-                PrimaryToolbarItem {
+                SecondaryToolbarItem {
                 } label: {
                     Label("Close", systemImage: "xmark.circle")
                 }

@@ -7,7 +7,7 @@ let package = Package(
     name: "CBSwiftUIKit",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v16),
         .macOS(.v13)
     ],
     products: [

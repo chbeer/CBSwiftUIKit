@@ -36,7 +36,7 @@ public struct CancelToolbarItem: ToolbarContent {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         Text("xxx")
             .toolbar(content: {
                 CancelToolbarItem() {}

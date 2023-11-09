@@ -1,22 +1,20 @@
 //
-//  SecondaryToolbarItem.swift
+//  CloseToolbarItem.swift
 //  CBSwiftUIKit
 //
-//  Created by Christian Beer on 11.10.23.
+//  Created by Christian Beer on 20.08.23.
 //
 
 import SwiftUI
 
-public struct SecondaryToolbarItem<L: View>: ToolbarContent {
+struct CloseToolbarItem: ToolbarContent {
     let action: () -> Void
-    @ViewBuilder var label: () -> L
     
-    public init(action: @escaping () -> Void, label: @escaping () -> L) {
+    public init(action: @escaping () -> Void) {
         self.action = action
-        self.label = label
     }
-
-    public var body: some ToolbarContent {
+    
+    var body: some ToolbarContent {
 #if canImport(UIKit)
         ToolbarItem(placement: .navigationBarLeading) {
             button
@@ -32,19 +30,16 @@ public struct SecondaryToolbarItem<L: View>: ToolbarContent {
         Button {
             action()
         } label: {
-            label()
+            Label("Close", systemImage: "xmark.circle")
         }
     }
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         Text("xxx")
             .toolbar(content: {
-                SecondaryToolbarItem {
-                } label: {
-                    Label("Close", systemImage: "xmark.circle")
-                }
+                CloseToolbarItem() {}
             })
     }
 }
