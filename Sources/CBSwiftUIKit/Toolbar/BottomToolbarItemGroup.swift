@@ -9,6 +9,11 @@ import SwiftUI
 
 public struct BottomToolbarItemGroup<V: View>: ToolbarContent {
     @ViewBuilder var content: () -> V
+    
+    public init(@ViewBuilder content: @escaping () -> V) {
+        self.content = content
+    }
+    
     public var body: some ToolbarContent {
 #if canImport(AppKit)
         ToolbarItemGroup(placement: .primaryAction) {

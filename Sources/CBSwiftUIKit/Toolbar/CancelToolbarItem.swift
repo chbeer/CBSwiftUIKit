@@ -32,6 +32,7 @@ public struct CancelToolbarItem: ToolbarContent {
         } label: {
             Text("Cancel")
         }
+        .accessibilityIdentifier("cancel")
     }
 }
 

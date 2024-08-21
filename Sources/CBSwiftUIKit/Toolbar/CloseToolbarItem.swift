@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-struct CloseToolbarItem: ToolbarContent {
+#if os(iOS)
+
+public struct CloseToolbarItem: ToolbarContent {
     let action: () -> Void
     
     public init(action: @escaping () -> Void) {
         self.action = action
     }
     
-    var body: some ToolbarContent {
+    public var body: some ToolbarContent {
 #if canImport(UIKit)
         ToolbarItem(placement: .navigationBarLeading) {
             button
@@ -27,11 +29,10 @@ struct CloseToolbarItem: ToolbarContent {
     }
     
     var button: some View {
-        Button {
+        RoundButton(systemImage: "xmark") {
             action()
-        } label: {
-            Label("Close", systemImage: "xmark.circle")
         }
+        .accessibilityIdentifier("close")
     }
 }
 
@@ -43,3 +44,5 @@ struct CloseToolbarItem: ToolbarContent {
             })
     }
 }
+
+#endif
