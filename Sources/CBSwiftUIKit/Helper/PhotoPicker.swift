@@ -8,6 +8,8 @@
 import SwiftUI
 import PhotosUI
 
+#if os(iOS) || os(macOS)
+
 public struct PhotoPicker<Label: View>: View {
 
     @State private var selectedItem: PhotosPickerItem?
@@ -42,3 +44,5 @@ public struct PhotoPicker<Label: View>: View {
         Image(systemName: "camera")
     }
 }
+
+#endif

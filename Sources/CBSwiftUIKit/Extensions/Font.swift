@@ -123,7 +123,11 @@ public extension CBFont.TextStyle {
     init(_ textStyle: SwiftUI.Font.TextStyle) {
         switch textStyle {
         case .largeTitle:
+#if os(tvOS)
+            self = .extraLargeTitle
+#else
             self = .largeTitle
+#endif
         case .title:
             self = .title1
         case .headline:

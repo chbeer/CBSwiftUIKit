@@ -8,7 +8,8 @@
 import SwiftUI
 import MediaPlayer
 
-#if canImport(UIKit)
+#if os(iOS)
+
 import UIKit
 
 public extension View {

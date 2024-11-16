@@ -15,7 +15,7 @@ public struct BottomToolbarItemGroup<V: View>: ToolbarContent {
     }
     
     public var body: some ToolbarContent {
-#if canImport(AppKit)
+#if os(macOS) || os(tvOS)
         ToolbarItemGroup(placement: .primaryAction) {
             content()
         }

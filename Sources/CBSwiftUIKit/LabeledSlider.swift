@@ -25,9 +25,15 @@ public struct LabeledSlider: View {
     public var body: some View {
         VStack(alignment: .leading) {
             Text(title)
+#if os(tvOS)
+#else
             Slider(value: value, in: range) {
                 Text(title)
             }
+#if os(macOS)
+            .labelsHidden()
+#endif
+#endif
             HStack {
                 Text(minLabel)
                 Spacer()

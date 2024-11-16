@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if canImport(UIKit)
+#if os(iOS)
 
 public struct CameraPicker<Label: View>: View {
     
