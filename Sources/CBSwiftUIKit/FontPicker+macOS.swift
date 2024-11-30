@@ -14,8 +14,9 @@ public extension FontPicker {
     var body: some View {
         LabeledContent(title) {
             HStack {
-                Text(familyName)
+                Text(familyName.nameTranslated)
                     .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 Button {
                     if NSFontPanel.shared.isVisible {
@@ -49,7 +50,6 @@ public extension FontPicker {
     FontPicker(title: "Pick Font", familyName: .constant("Helvetica Neue"))
 }
 
-#endif
 
 class FontPickerDelegate {
     var parent: FontPicker
@@ -65,3 +65,4 @@ class FontPickerDelegate {
 
 }
 
+#endif

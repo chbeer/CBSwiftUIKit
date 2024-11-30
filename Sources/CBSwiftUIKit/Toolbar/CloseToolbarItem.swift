@@ -22,7 +22,7 @@ public struct CloseToolbarItem: ToolbarContent {
             button
         }
 #else
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: .cancellationAction) {
             button
         }
 #endif

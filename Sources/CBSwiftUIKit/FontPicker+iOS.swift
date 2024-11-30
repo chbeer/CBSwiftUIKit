@@ -37,13 +37,13 @@ class UIFontsManager {
     }
 }
 
+#endif
+
 extension String {
     var nameTranslated: String {
         switch self {
-        case ".AppleSystemUlFont": return "System Font"
+        case ".AppleSystemUIFont": return "System Font"
         default: return self
         }
     }
 }
-
-#endif
