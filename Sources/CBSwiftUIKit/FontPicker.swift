@@ -17,7 +17,7 @@ public struct FontPicker: View {
     @State var font: NSFont
 #endif
     
-    public init(title: LocalizedStringKey, familyName: Binding<String>) {
+    public init(_ title: LocalizedStringKey, familyName: Binding<String>) {
         self.title = title
         self._familyName = familyName
 #if os(macOS)

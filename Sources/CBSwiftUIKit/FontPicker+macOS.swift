@@ -47,7 +47,7 @@ public extension FontPicker {
 }
 
 #Preview {
-    FontPicker(title: "Pick Font", familyName: .constant("Helvetica Neue"))
+    FontPicker("Pick Font", familyName: .constant("Helvetica Neue"))
 }
 
 

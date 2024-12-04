@@ -21,10 +21,11 @@ public struct LabeledTextField: View {
         self.title = .localized(title)
         self._text = text
     }
-    public init(_ title: String, text: Binding<String>) {
-        self.title = .static(title)
-        self._text = text
-    }
+//    @_disfavoredOverload
+//    public init(_ title: String, text: Binding<String>) {
+//        self.title = .static(title)
+//        self._text = text
+//    }
 
     public var body: some View {
 #if canImport(AppKit)
