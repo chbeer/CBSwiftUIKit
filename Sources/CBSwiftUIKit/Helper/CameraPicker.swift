@@ -9,6 +9,8 @@ import SwiftUI
 
 #if os(iOS)
 
+// (!) THIS DOES NOT WORK IN MENU! https://forums.developer.apple.com/forums/thread/712431
+
 public struct CameraPicker<Label: View>: View {
     
     let didPickImage: (CBImage) -> Void
@@ -30,7 +32,7 @@ public struct CameraPicker<Label: View>: View {
             label: { label() }
         )
         .sheet(isPresented: $showPicker) {
-            CameraView(sourceType: sourceType, pickMovies: false) { media in
+            CameraView(pickMovies: false) { media in
                 guard case .image(let image) = media else { return }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
