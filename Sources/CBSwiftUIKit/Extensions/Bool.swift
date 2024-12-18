@@ -8,19 +8,29 @@
 import SwiftUI
 
 public extension Bool {
-    static var macOS: Bool {
 #if canImport(AppKit)
+    
+    static var macOS: Bool {
         return true
-#else
+    }
+    static var iOS: Bool {
         return false
-#endif
+    }
+    static var iPad: Bool {
+        return false
+    }
+
+#else
+    
+    static var macOS: Bool {
+        return false
+    }
+    static var iOS: Bool {
+        return true
+    }
+    static var iPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
     }
     
-    static var iOS: Bool {
-#if canImport(UIKit)
-        return true
-#else
-        return false
 #endif
-    }
 }
