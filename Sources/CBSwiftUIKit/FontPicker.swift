@@ -26,7 +26,6 @@ public struct FontPicker: View {
         self.title = title
         self._familyName = familyName
         
-        print("Family name: \(familyName.wrappedValue)")
 #if os(macOS)
         self.font = NSFont(name: familyName.wrappedValue, size: 12) ?? NSFont.systemFont(ofSize: 12)
 #endif

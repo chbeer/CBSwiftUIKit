@@ -4,6 +4,7 @@
 //  Created by Christian Beer on 04.04.23.
 //
 
+import os
 import SwiftUI
 
 public struct ErrorAlert: Identifiable {
@@ -19,7 +20,7 @@ open class ErrorHandling: ObservableObject {
     
     @MainActor
     open func handle(error: Error) {
-        print("🔥 error: \(error)")
+        os_log(.error, "🔥 error: \(error)")
         currentAlert = ErrorAlert(message: error.localizedDescription)
     }
     

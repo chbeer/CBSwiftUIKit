@@ -25,7 +25,6 @@ struct AlertWithItemModifier<Item : Equatable, A: View>: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .onReceive(Just(item)) { item in
-                print("-- item \(item)")
                 let present = item.wrappedValue != nil
                 if present != isPresented {
                     isPresented = present

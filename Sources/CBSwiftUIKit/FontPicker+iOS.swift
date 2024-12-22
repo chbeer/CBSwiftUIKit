@@ -46,7 +46,6 @@ class UIFontsManager {
     static let shared = UIFontsManager()
     
     lazy var familyNames: [String] = {
-        print("families: \(UIFont.familyNames)")
         return ([".AppleSystemUlFont"] + UIFont.familyNames).sorted(using: .localizedStandard)
     }()
 }
