@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 struct AlertWithItemModifier<Item : Equatable, A: View>: ViewModifier {
+    
     let titleKey: LocalizedStringKey
     let item: Binding<Item?>
     @ViewBuilder let actions: (Item) -> A
@@ -24,13 +25,25 @@ struct AlertWithItemModifier<Item : Equatable, A: View>: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .onReceive(Just(item)) { item in
-                isPresented = item.wrappedValue != nil
-            }
-            .alert(titleKey, isPresented: $isPresented) {
-                if let item = item.wrappedValue {
-                    actions(item)
+                print("-- item \(item)")
+                let present = item.wrappedValue != nil
+                if present != isPresented {
+                    isPresented = present
                 }
             }
+        // Applying the alert for error handling using a background element
+        // is a workaround, if the alert would be applied directly,
+        // other .alert modifiers inside of content would not work anymore
+            .background(
+                EmptyView()
+                    .alert(titleKey, isPresented: $isPresented) {
+                        if let item = item.wrappedValue {
+                            actions(item)
+                        }
+                    } message: {
+                        
+                    }
+            )
     }
 }
         
