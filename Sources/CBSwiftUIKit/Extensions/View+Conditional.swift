@@ -22,6 +22,24 @@ public extension View {
             self
         }
     }
+    
+    /// Applies the given transform if the given condition evaluates to `true`.
+    /// - Parameters:
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
+    @ViewBuilder func `if`<Content: View>(
+        _ condition: @autoclosure () -> Bool,
+        @ViewBuilder then t: (Self) -> Content,
+        @ViewBuilder else e: (Self) -> Content
+    ) -> some View {
+        if condition() {
+            t(self)
+        } else {
+            e(self)
+        }
+    }
+    
     /// Applies the given transform if the given condition evaluates to `true`.
     /// - Parameters:
     ///   - condition: The condition to evaluate.
