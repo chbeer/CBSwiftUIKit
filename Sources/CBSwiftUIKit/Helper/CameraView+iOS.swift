@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if !os(macOS)
+#if !os(macOS) && !os(visionOS)
 
 struct CameraView: UIViewControllerRepresentable {
     
