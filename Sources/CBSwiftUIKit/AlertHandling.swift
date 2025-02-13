@@ -8,42 +8,53 @@
 import SwiftUI
 import Foundation
 
-struct AlertConfiguration: Equatable, Identifiable {
-    struct Action: Equatable, Identifiable {
+public struct AlertConfiguration: Equatable, Identifiable {
+    
+    public struct Action: Equatable, Identifiable {
         public let id = UUID()
         let title: LocalizedStringKey
         let systemImage: String?
         let role: ButtonRole?
         let action: () -> Void
         
-        init(title: LocalizedStringKey, systemImage: String? = nil, role: ButtonRole? = nil, action: @escaping () -> Void) {
+        public init(title: LocalizedStringKey, systemImage: String? = nil, role: ButtonRole? = nil, action: @escaping () -> Void) {
             self.title = title
             self.systemImage = systemImage
             self.role = role
             self.action = action
         }
         
-        static func == (lhs: Action, rhs: Action) -> Bool {
+        public static func == (lhs: Action, rhs: Action) -> Bool {
             return lhs.id == rhs.id
         }
     }
     
-    let id = UUID()
+    public let id = UUID()
+    let title: LocalizedStringKey
     let message: LocalizedStringKey
     let actions: [Action]
     
-    init(message: LocalizedStringKey, actions: [Action]) {
+    public init(
+        title: LocalizedStringKey = "Confirm",
+        message: LocalizedStringKey,
+        actions: [Action]
+    ) {
+        self.title = title
         self.message = message
         self.actions = actions
     }
 }
 
-open class AlertHandling: ObservableObject {
+open class AlertHandling: NSObject, ObservableObject {
     
     @Published var currentAlert: AlertConfiguration?
+
+    @MainActor
+    public func showAlert(_ alert: AlertConfiguration) {
+        currentAlert = alert
+    }
     
-    public init() {}
-    
+    @MainActor
     public func okCancel(message: LocalizedStringKey,
                          okButton: LocalizedStringKey = "OK", ok: @escaping () -> Void,
                          cancel: @escaping() -> Void = {}) {
@@ -62,21 +73,24 @@ struct AlertHandlingViewModifier: ViewModifier {
     
     @ObservedObject var alertHandling: AlertHandling
     
+    @State var title: LocalizedStringKey = "Confirm"
     @State var alertVisible = false
     
     func body(content: Content) -> some View {
         content
             .onChange(of: alertHandling.currentAlert) { _, newValue in
+                title = newValue?.title ?? "Confirm"
                 alertVisible = newValue != nil
             }
             .alert(
-                "Confirm",
+                title,
                 isPresented: $alertVisible,
                 presenting: alertHandling) { context in
                     if let alert = context.currentAlert {
                         ForEach(alert.actions) { action in
                             Button(role: action.role) {
                                 action.action()
+                                alertHandling.currentAlert = nil
                             } label: {
                                 if let systemImage = action.systemImage {
                                     Label(action.title, systemImage: systemImage)
