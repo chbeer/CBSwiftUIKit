@@ -19,6 +19,9 @@ public extension Bool {
     static var iPad: Bool {
         return false
     }
+    static var iPhone: Bool {
+        return false
+    }
 
 #else
     
@@ -30,6 +33,9 @@ public extension Bool {
     }
     static var iPad: Bool {
         UIDevice.current.userInterfaceIdiom == .pad
+    }
+    static var iPhone: Bool {
+        UIDevice.current.userInterfaceIdiom != .pad
     }
     
 #endif
