@@ -21,15 +21,36 @@ public struct RoundButton: View {
     }
     
     public var body: some View {
-        Button("Close", systemImage: systemImage) {
-            action()
-        }
-        .buttonBorderShape(.circle)
-        .if(prominent) { view, prominent in
-            if prominent {
-                view.buttonStyle(.borderedProminent)
-            } else {
-                view.buttonStyle(.bordered)
+        if #available(macOS 14.0, *) {
+            Button("Close", systemImage: systemImage) {
+                action()
+            }
+            .buttonBorderShape(.circle)
+            .if(prominent) { view, prominent in
+                if prominent {
+                    view.buttonStyle(.borderedProminent)
+                } else {
+                    view.buttonStyle(.bordered)
+                }
+            }
+        } else {
+            Button {
+                action()
+            } label: {
+                Image(systemName: systemImage)
+                    .foregroundColor(.primary)
+                    .padding(4)
+                    .background {
+                        Circle()
+                            .fill(.background)
+                    }
+            }
+            .buttonStyle(.borderless)
+            .clipShape(Circle())
+            .contentShape(Circle())
+            .overlay {
+                Circle()
+                    .stroke(.gray.opacity(0.3))
             }
         }
     }
@@ -40,4 +61,6 @@ public struct RoundButton: View {
         RoundButton(systemImage: "xmark", prominent: false) {}
         RoundButton(systemImage: "xmark", prominent: true) {}
     }
+    .padding()
 }
+
