@@ -15,7 +15,7 @@ public extension FontPicker {
     var body: some View {
         LabeledContent(title) {
             HStack {
-                Text(familyName)
+                Text(familyName.nameTranslated)
                     .foregroundStyle(.secondary)
                 
                 Button {
@@ -103,7 +103,7 @@ struct FontPickerView: UIViewControllerRepresentable {
 extension String {
     var nameTranslated: String {
         switch self {
-        case ".AppleSystemUIFont": return "System Font"
+        case ".AppleSystemUIFont", "-system": return "System Font"
         default: return self
         }
     }
