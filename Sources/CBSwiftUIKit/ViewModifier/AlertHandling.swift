@@ -30,16 +30,33 @@ public struct AlertConfiguration: Equatable, Identifiable {
     }
     
     public let id = UUID()
-    let title: LocalizedStringKey
+    let title: Text
     let message: LocalizedStringKey
     let actions: [Action]
     
     public init(
-        title: LocalizedStringKey = "Confirm",
+        title: Text,
         message: LocalizedStringKey,
         actions: [Action]
     ) {
         self.title = title
+        self.message = message
+        self.actions = actions
+    }
+    public init(
+        title: LocalizedStringKey,
+        message: LocalizedStringKey,
+        actions: [Action]
+    ) {
+        self.title = Text(title)
+        self.message = message
+        self.actions = actions
+    }
+    public init(
+        message: LocalizedStringKey,
+        actions: [Action]
+    ) {
+        self.title = Text("Confirm", bundle: .module)
         self.message = message
         self.actions = actions
     }
@@ -73,13 +90,22 @@ struct AlertHandlingViewModifier: ViewModifier {
     
     @ObservedObject var alertHandling: AlertHandling
     
-    @State var title: LocalizedStringKey = "Confirm"
+    @State var title: Text
     @State var alertVisible = false
+    
+    init(title: Text, alertHandling: AlertHandling) {
+        self.title = title
+        self.alertHandling = alertHandling
+    }
+    init(alertHandling: AlertHandling) {
+        self.title = Text("Confirm", bundle: .module)
+        self.alertHandling = alertHandling
+    }
     
     func body(content: Content) -> some View {
         content
             .onChange(of: alertHandling.currentAlert) { _, newValue in
-                title = newValue?.title ?? "Confirm"
+                title = newValue?.title ?? Text("Confirm", bundle: .module)
                 alertVisible = newValue != nil
             }
             .alert(
