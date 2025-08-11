@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-#if os(iOS)
-
 public struct CloseToolbarItem: ToolbarContent {
     let action: () -> Void
     
@@ -28,21 +26,27 @@ public struct CloseToolbarItem: ToolbarContent {
 #endif
     }
     
+    @ViewBuilder
     var button: some View {
-        RoundButton(systemImage: "xmark") {
-            action()
+        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+            Button(role: .close) {
+                action()
+            }
+            .accessibilityIdentifier("close")
+        } else {
+            RoundButton(systemImage: "xmark") {
+                action()
+            }
+            .accessibilityIdentifier("close")
         }
-        .accessibilityIdentifier("close")
     }
 }
 
 #Preview {
     NavigationView {
         Text("xxx")
-            .toolbar(content: {
+            .toolbar {
                 CloseToolbarItem() {}
-            })
+            }
     }
 }
-
-#endif
