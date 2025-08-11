@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-#if os(iOS)
-
 public struct CloseToolbarItem: ToolbarContent {
     let action: () -> Void
     
@@ -44,5 +42,3 @@ public struct CloseToolbarItem: ToolbarContent {
             })
     }
 }
-
-#endif
