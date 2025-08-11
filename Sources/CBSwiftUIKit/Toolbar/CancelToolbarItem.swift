@@ -26,29 +26,21 @@ public struct CancelToolbarItem: ToolbarContent {
 #endif
     }
     
-    @ViewBuilder
     var button: some View {
-        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
-            Button(role: .cancel) {
-                action()
-            }
-            .accessibilityIdentifier("cancel")
-        } else {
-            Button {
-                action()
-            } label: {
-                Text("Cancel")
-            }
-            .accessibilityIdentifier("cancel")
+        Button {
+            action()
+        } label: {
+            Text("Cancel")
         }
+        .accessibilityIdentifier("cancel")
     }
 }
 
 #Preview {
     NavigationView {
         Text("xxx")
-            .toolbar {
+            .toolbar(content: {
                 CancelToolbarItem() {}
-            }
+            })
     }
 }
