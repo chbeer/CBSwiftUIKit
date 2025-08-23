@@ -34,7 +34,7 @@ public struct CloseToolbarItem: ToolbarContent {
             }
             .accessibilityIdentifier("close")
         } else {
-            RoundButton(systemImage: "xmark") {
+            Button(systemImage: "xmark") {
                 action()
             }
             .accessibilityIdentifier("close")
