@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "Cancel" : {
       "localizations" : {
         "da" : {
@@ -137,7 +140,7 @@
         }
       }
     },
-    "OK" : {
+    "Ok" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
@@ -171,7 +174,7 @@
         }
       }
     },
-    "Ok" : {
+    "OK" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {

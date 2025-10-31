@@ -27,8 +27,16 @@ public struct CloseToolbarItem: ToolbarContent {
     }
     
     var button: some View {
-        RoundButton(systemImage: "xmark") {
-            action()
+        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+            Button(role: .close) {
+                action()
+            }
+            .accessibilityIdentifier("close")
+        } else {
+            Button(systemImage: "xmark") {
+                action()
+            }
+            .accessibilityIdentifier("close")
         }
         .accessibilityIdentifier("close")
     }
