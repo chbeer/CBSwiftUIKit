@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CBFont.swift
 //
 //
 //  Created by Christian Beer on 24.07.24.
@@ -13,7 +13,7 @@ import UIKit
 #elseif canImport(AppKit)
 #endif
 
-fileprivate extension CBFont {
+public extension CBFont {
     
     func with(weight: Weight? = nil, width: Width? = nil, symbolicTraits: CTFontSymbolicTraits = [], feature: [CBFontDescriptor.FeatureKey: Int]? = nil) -> CBFont {
         var mergedsymbolicTraits = CTFontGetSymbolicTraits(self)
@@ -282,5 +282,36 @@ fileprivate extension SwiftUI.Font {
                 return nil
             }
         }
+    }
+}
+
+public extension CBFontDescriptor.SymbolicTraits {
+    var ctSymbolicTraits: CTFontSymbolicTraits {
+        var value: UInt32 = 0
+        if self.contains(.traitItalic) {
+            value &= CTFontSymbolicTraits.traitItalic.rawValue
+        }
+        if self.contains(.traitBold) {
+            value &= CTFontSymbolicTraits.traitBold.rawValue
+        }
+        if self.contains(.traitExpanded) {
+            value &= CTFontSymbolicTraits.traitExpanded.rawValue
+        }
+        if self.contains(.traitCondensed) {
+            value &= CTFontSymbolicTraits.traitCondensed.rawValue
+        }
+        if self.contains(.traitMonoSpace) {
+            value &= CTFontSymbolicTraits.traitMonoSpace.rawValue
+        }
+        if self.contains(.traitVertical) {
+            value &= CTFontSymbolicTraits.traitVertical.rawValue
+        }
+        if self.contains(.traitUIOptimized) {
+            value &= CTFontSymbolicTraits.traitUIOptimized.rawValue
+        }
+        if self.contains(.classMask) {
+            value &= CTFontSymbolicTraits.classMaskTrait.rawValue
+        }
+        return CTFontSymbolicTraits(rawValue: value)
     }
 }
