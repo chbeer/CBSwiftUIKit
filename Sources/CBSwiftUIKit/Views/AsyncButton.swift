@@ -42,13 +42,16 @@ public struct AsyncButton<Label>: View where Label: View {
             }
         } label: {
             self.label
+                .padding(.horizontal, 30)
+                .overlay(alignment: .leading) {
+                    if isActive {
+                        ProgressView()
+                            .controlSize(.small)
+                        
+                    }
+                }
         }
         .disabled(isActive)
-        .overlay {
-            if isActive {
-                ProgressView()
-            }
-        }
     }
 
 }
