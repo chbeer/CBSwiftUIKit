@@ -75,13 +75,13 @@ extension ButtonToolbarItem.Role {
         case .cancel:
             return .cancel
         case .confirm:
-            if #available(iOS 26.0, *) {
+            if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
                 return .confirm
             } else {
                 return .cancel
             }
         case .close:
-            if #available(iOS 26.0, *) {
+            if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
                 return .close
             } else {
                 return .cancel
