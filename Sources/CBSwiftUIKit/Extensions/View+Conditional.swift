@@ -48,4 +48,22 @@ public extension View {
     func `if`<Content: View>(_ condition: @autoclosure () -> Bool, @ViewBuilder transform: (Self, Bool) -> Content) -> some View {
         transform(self, condition())
     }
+    
+    // MARK: -
+    
+    func macOS<Content: View>(@ViewBuilder _ transform: (Self) -> Content) -> some View {
+#if targetEnvironment(macCatalyst)
+        transform(self)
+#else
+        self
+#endif
+    }
+    func iOS<Content: View>(@ViewBuilder _ transform: (Self) -> Content) -> some View {
+#if targetEnvironment(macCatalyst)
+        self
+#else
+        transform(self)
+#endif
+    }
+
 }

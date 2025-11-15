@@ -26,6 +26,7 @@ public struct CloseToolbarItem: ToolbarContent {
 #endif
     }
     
+    @ViewBuilder
     var button: some View {
         if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
             Button(role: .close) {
@@ -38,7 +39,6 @@ public struct CloseToolbarItem: ToolbarContent {
             }
             .accessibilityIdentifier("close")
         }
-        .accessibilityIdentifier("close")
     }
 }
 

@@ -43,7 +43,7 @@ public struct AsyncButton<Label>: View where Label: View {
         } label: {
             self.label
         }
-        .opacity(isActive ? 0.2 : 1)
+        .disabled(isActive)
         .overlay {
             if isActive {
                 ProgressView()
