@@ -63,10 +63,17 @@ public extension CBFont {
     
     func with(featureType type: Int, selector: Int) -> CBFont? {
 #if canImport(UIKit)
-        return with(feature: [
-            UIFontDescriptor.FeatureKey.featureIdentifier : type as Int,
-            UIFontDescriptor.FeatureKey.typeIdentifier : selector as Int
-        ])
+        if #available(iOS 15, *) {
+            return with(feature: [
+                UIFontDescriptor.FeatureKey.type : type as Int,
+                UIFontDescriptor.FeatureKey.selector : selector as Int
+            ])
+        } else {
+            return with(feature: [
+                UIFontDescriptor.FeatureKey.featureIdentifier : type as Int,
+                UIFontDescriptor.FeatureKey.typeIdentifier : selector as Int
+            ])
+        }
 #else
         return with(feature: [
             NSFontDescriptor.FeatureKey.typeIdentifier : type as Int,
@@ -285,7 +292,8 @@ fileprivate extension SwiftUI.Font {
     }
 }
 
-public extension CBFontDescriptor.SymbolicTraits {
+#if canImport(UIKit)
+public extension UIFontDescriptor.SymbolicTraits {
     var ctSymbolicTraits: CTFontSymbolicTraits {
         var value: UInt32 = 0
         if self.contains(.traitItalic) {
@@ -315,3 +323,35 @@ public extension CBFontDescriptor.SymbolicTraits {
         return CTFontSymbolicTraits(rawValue: value)
     }
 }
+#elseif canImport(AppKit)
+public extension NSFontDescriptor.SymbolicTraits {
+    var ctSymbolicTraits: CTFontSymbolicTraits {
+        var value: UInt32 = 0
+        if self.contains(.italic) {
+            value &= CTFontSymbolicTraits.traitItalic.rawValue
+        }
+        if self.contains(.bold) {
+            value &= CTFontSymbolicTraits.traitBold.rawValue
+        }
+        if self.contains(.expanded) {
+            value &= CTFontSymbolicTraits.traitExpanded.rawValue
+        }
+        if self.contains(.condensed) {
+            value &= CTFontSymbolicTraits.traitCondensed.rawValue
+        }
+        if self.contains(.monoSpace) {
+            value &= CTFontSymbolicTraits.traitMonoSpace.rawValue
+        }
+        if self.contains(.vertical) {
+            value &= CTFontSymbolicTraits.traitVertical.rawValue
+        }
+        if self.contains(.UIOptimized) {
+            value &= CTFontSymbolicTraits.traitUIOptimized.rawValue
+        }
+        if self.contains(.classMask) {
+            value &= CTFontSymbolicTraits.classMaskTrait.rawValue
+        }
+        return CTFontSymbolicTraits(rawValue: value)
+    }
+}
+#endif
