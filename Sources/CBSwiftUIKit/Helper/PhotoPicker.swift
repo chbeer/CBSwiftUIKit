@@ -27,7 +27,7 @@ public struct PhotoPicker<Label: View>: View {
         PhotosPicker(selection: $selectedItem) {
             label()
         }
-        .onChange(of: selectedItem) {
+        .onChange(of: selectedItem) { _, _ in
             Task {
                 if let data = try? await selectedItem?.loadTransferable(type: Data.self),
                     let image = CBImage(data: data) {
