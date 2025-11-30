@@ -47,6 +47,9 @@
         }
       }
     },
+    "Bold" : {
+
+    },
     "Cancel" : {
       "localizations" : {
         "da" : {
@@ -276,6 +279,9 @@
           }
         }
       }
+    },
+    "Italic" : {
+
     },
     "Ok" : {
       "localizations" : {
