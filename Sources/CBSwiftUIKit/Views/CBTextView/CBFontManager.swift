@@ -38,18 +38,18 @@ public class CBFontManager: ObservableObject {
     
     @Published public private(set) var foregroundColor: UIColor = .label
     
-    internal var currentTextView: UITextView?
+    public var currentTextView: UITextView?
     
     // MARK: -
     
-    func resetState() {
+    public func resetState() {
         boldState = .off
         italicState = .off
         strikethroughState = .off
         underlineState = .off
     }
     
-    func state(for trait: FontTraitMask) -> UIMenuElement.State {
+    public func state(for trait: FontTraitMask) -> UIMenuElement.State {
         if trait == .bold {
             return boldState
         } else if trait == .italic {
@@ -58,7 +58,7 @@ public class CBFontManager: ObservableObject {
         return .off
     }
     
-    func updateWithAttributes(_ attributes: [NSAttributedString.Key: Any]?) {
+    public func updateWithAttributes(_ attributes: [NSAttributedString.Key: Any]?) {
         guard let attributes else {
             resetState()
             return
@@ -79,7 +79,7 @@ public class CBFontManager: ObservableObject {
         }
     }
     
-    func convertFont(_ font: UIFont, toHaveTrait trait: FontTraitMask) -> UIFont {
+    public func convertFont(_ font: UIFont, toHaveTrait trait: FontTraitMask) -> UIFont {
         var result = font.fontDescriptor.symbolicTraits
         if trait.contains(.italic) {
             result.insert(.traitItalic)
@@ -93,7 +93,7 @@ public class CBFontManager: ObservableObject {
         }
         return UIFont(descriptor: descriptor, size: font.pointSize)
     }
-    func convertFont(_ font: UIFont, toNotHaveTrait trait: FontTraitMask) -> UIFont {
+    public func convertFont(_ font: UIFont, toNotHaveTrait trait: FontTraitMask) -> UIFont {
         var result = font.fontDescriptor.symbolicTraits
         if trait.contains(.italic) {
             result.remove(.traitItalic)
