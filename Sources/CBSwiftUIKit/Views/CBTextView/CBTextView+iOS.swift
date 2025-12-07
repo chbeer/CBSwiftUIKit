@@ -31,7 +31,7 @@ public extension CBTextView {
         toolbar.items = [
             CBFontManager.shared.barButtonItem(forTrait: .bold),
             CBFontManager.shared.barButtonItem(forTrait: .italic),
-            CBFontManager.shared.barButtonItemForColor()
+            CBFontManager.shared.barButtonItemForColor(textView: textView)
         ]
         toolbar.sizeToFit()
         
@@ -120,7 +120,7 @@ extension UITextView {
     }
     @IBAction public func toggleTrait(_ sender: Any?) {
         guard let trait = traitFrom(sender) else { return }
-        if CBFontManager.shared.state(for: trait) == .on {
+        if CBFontManager.shared.state(for: trait) {
             updateFont(trait: trait, active: false)
         } else {
             updateFont(trait: trait, active: true)
@@ -128,7 +128,7 @@ extension UITextView {
     }
     
     @IBAction public func updateForegroundColor(_ sender: Any?) {
-        guard let well = sender as? UIColorWell, let color = well.selectedColor else { return }
+        guard let well = sender as? CBUIColorWell, let color = well.selectedColor else { return }
         setForegroundColor(color)
     }
     

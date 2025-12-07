@@ -14,9 +14,10 @@ protocol TagContainer {
     var tag: Int { get }
 }
 
-/// Inspired by NSFontManager on AppKit this is supposed to create a bridge between the selected text in UITextView and menu items and buttons showing the state of the selected text.
-/// This is a UIViewController so that it can be put into the responder chain
-public class CBFontManager: ObservableObject {
+/// Inspired by NSFontManager on AppKit this is supposed to create a bridge
+/// between the selected text in UITextView and menu items and buttons showing
+/// the state of the selected text.
+public class CBFontManager: NSObject {
     
     public struct FontTraitMask: OptionSet {
         
@@ -31,31 +32,31 @@ public class CBFontManager: ObservableObject {
     
     public static let shared = CBFontManager()
     
-    @Published public private(set) var boldState: UIMenuElement.State = .off
-    @Published public private(set) var italicState: UIMenuElement.State = .off
-    @Published public private(set) var strikethroughState: UIMenuElement.State = .off
-    @Published public private(set) var underlineState: UIMenuElement.State = .off
+    @objc public dynamic private(set) var isBold: Bool = false
+    @objc public dynamic private(set) var isItalic: Bool = false
+    @objc public dynamic private(set) var isStrikethrough: Bool = false
+    @objc public dynamic private(set) var isUnderline: Bool = false
     
-    @Published public private(set) var foregroundColor: UIColor = .label
+    @objc public dynamic private(set) var foregroundColor: UIColor = .label
     
-    public var currentTextView: UITextView?
+    @objc public dynamic var currentTextView: UITextView?
     
     // MARK: -
     
     public func resetState() {
-        boldState = .off
-        italicState = .off
-        strikethroughState = .off
-        underlineState = .off
+        isBold = false
+        isItalic = false
+        isStrikethrough = false
+        isUnderline = false
     }
     
-    public func state(for trait: FontTraitMask) -> UIMenuElement.State {
+    public func state(for trait: FontTraitMask) -> Bool {
         if trait == .bold {
-            return boldState
+            return isBold
         } else if trait == .italic {
-            return italicState
+            return isItalic
         }
-        return .off
+        return false
     }
     
     public func updateWithAttributes(_ attributes: [NSAttributedString.Key: Any]?) {
@@ -64,17 +65,25 @@ public class CBFontManager: ObservableObject {
             return
         }
         
-        if let font = attributes[.font] as? UIFont {
+        if let font = attributes[.font] as? CBFont {
             let descriptor = font.fontDescriptor
             
-            boldState = descriptor.symbolicTraits.contains(.traitBold) ? .on : .off
-            italicState = descriptor.symbolicTraits.contains(.traitItalic) ? .on : .off
-//            
-//            print(">> Updated bold: \(boldState)")
+            let bold = descriptor.symbolicTraits.contains(.traitBold)
+            let italic = descriptor.symbolicTraits.contains(.traitItalic)
+            
+            if self.isBold != bold {
+                self.isBold = bold
+            }
+            if self.isItalic != italic {
+                self.isItalic = italic
+            }
+//
+//            print(">> Updated bold: \(isBold)")
 //            print(">> Updated italic: \(italicState)")
         }
         
-        if let color = attributes[.foregroundColor] as? UIColor {
+        let color = attributes[.foregroundColor] as? CBColor ?? .label
+        if self.foregroundColor != color {
             self.foregroundColor = color
         }
     }
