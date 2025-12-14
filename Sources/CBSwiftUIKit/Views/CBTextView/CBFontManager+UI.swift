@@ -59,10 +59,14 @@ class TraitButton: UIButton {
         tag = trait.rawValue
         
         if trait.contains(.bold) {
+            self.isSelected = CBFontManager.shared.isBold
+
             observer = CBFontManager.shared.observe(\.isBold) { [weak self] _, _ in
                 self?.isSelected = CBFontManager.shared.isBold
             }
         } else if trait.contains(.italic) {
+            self.isSelected = CBFontManager.shared.isItalic
+
             observer = CBFontManager.shared.observe(\.isItalic) { [weak self] _, _ in
                 self?.isSelected = CBFontManager.shared.isItalic
             }
@@ -82,7 +86,6 @@ class TextColorWell: CBUIColorWell {
         super.init(frame: frame)
         
         selectedColor = CBFontManager.shared.foregroundColor
-        
         observer = CBFontManager.shared.observe(\.foregroundColor) { [weak self] _, _ in
             self?.selectedColor = CBFontManager.shared.foregroundColor
         }

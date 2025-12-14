@@ -77,9 +77,6 @@ public class CBFontManager: NSObject {
             if self.isItalic != italic {
                 self.isItalic = italic
             }
-//
-//            print(">> Updated bold: \(isBold)")
-//            print(">> Updated italic: \(italicState)")
         }
         
         let color = attributes[.foregroundColor] as? CBColor ?? .label

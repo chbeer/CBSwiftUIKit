@@ -5,6 +5,7 @@
 //  Created by Christian Beer on 30.11.25.
 //
 
+import os
 import SwiftUI
 
 #if !os(macOS)
@@ -49,6 +50,8 @@ public extension CBTextView {
         context.coordinator.isUpdating = true
         
         if textView.attributedText != text {
+            os_log("updateUIView: \(text)")
+            
             textView.attributedText = text
         }
         
@@ -66,6 +69,8 @@ extension CBTextView.Coordinator: UITextViewDelegate {
         if parent.text != text {
             parent.text = text ?? NSAttributedString()
         }
+        
+        os_log("textViewDidChange: \(text)")
     }
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -75,6 +80,8 @@ extension CBTextView.Coordinator: UITextViewDelegate {
     }
     public func textViewDidEndEditing(_ textView: UITextView) {
         let text = textView.attributedText
+        
+        os_log("textViewDidEnd: \(text)")
         
         if parent.text != text {
             parent.text = text ?? NSAttributedString()
@@ -173,6 +180,8 @@ extension UITextView {
         self.attributedText = attributedText
         self.selectedRange = selectedRange  // restore selection
         
+        self.delegate?.textViewDidChange?(self)
+        
         attributes[.font] = newFont
         CBFontManager.shared.updateWithAttributes(attributes)
     }
@@ -196,6 +205,8 @@ extension UITextView {
         
         self.attributedText = attributedText
         self.selectedRange = selectedRange  // restore selection
+        
+        self.delegate?.textViewDidChange?(self)
         
         attributes[.foregroundColor] = color
         CBFontManager.shared.updateWithAttributes(attributes)
