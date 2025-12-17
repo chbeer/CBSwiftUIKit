@@ -118,15 +118,15 @@ extension CBTextView.Coordinator: UITextViewDelegate {
 extension UITextView {
     
     @IBAction public func addTrait(_ sender: Any?) {
-        guard let trait = traitFrom(sender) else { return }
+        guard isFirstResponder, let trait = traitFrom(sender) else { return }
         updateFont(trait: trait, active: true)
     }
     @IBAction public func removeTrait(_ sender: Any?) {
-        guard let trait = traitFrom(sender) else { return }
+        guard isFirstResponder, let trait = traitFrom(sender) else { return }
         updateFont(trait: trait, active: false)
     }
     @IBAction public func toggleTrait(_ sender: Any?) {
-        guard let trait = traitFrom(sender) else { return }
+        guard isFirstResponder, let trait = traitFrom(sender) else { return }
         if CBFontManager.shared.state(for: trait) {
             updateFont(trait: trait, active: false)
         } else {
@@ -135,7 +135,7 @@ extension UITextView {
     }
     
     @IBAction public func updateForegroundColor(_ sender: Any?) {
-        guard let well = sender as? CBUIColorWell, let color = well.selectedColor else { return }
+        guard isFirstResponder, let well = sender as? CBUIColorWell, let color = well.selectedColor else { return }
         setForegroundColor(color)
     }
     
