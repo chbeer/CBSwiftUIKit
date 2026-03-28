@@ -25,6 +25,16 @@ open class ErrorHandling: ObservableObject {
     }
     
     @MainActor
+    open func handle<T, E>(result: Result<T, E>, onSuccess handler: (T) -> Void) {
+        switch result {
+        case .success(let t):
+            handler(t)
+        case .failure(let e):
+            handle(error: e)
+        }
+    }
+    
+    @MainActor
     @discardableResult
     public func perform(_ block: () throws -> Void) -> Bool {
         do {
