@@ -20,9 +20,9 @@ public extension Backport where Content: ToolbarContent {
     
 }
 
-extension Backport where Content == Any {
+public extension Backport {
  
-    public enum Visibility: Equatable {
+    enum Visibility: Equatable {
         case automatic
         case visible
         case hidden

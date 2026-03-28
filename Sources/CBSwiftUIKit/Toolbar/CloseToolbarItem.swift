@@ -34,10 +34,11 @@ public struct CloseToolbarItem: ToolbarContent {
             }
             .accessibilityIdentifier("close")
         } else {
-            Button(systemImage: "xmark") {
+            Button("Close", systemImage: "xmark") {
                 action()
             }
             .accessibilityIdentifier("close")
+            .labelStyle(.iconOnly)
         }
     }
 }
