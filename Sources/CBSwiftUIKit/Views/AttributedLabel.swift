@@ -25,11 +25,22 @@ extension AttributedLabel: UIViewRepresentable {
         label.lineBreakMode = .byWordWrapping
         label.adjustsFontForContentSizeCategory = true
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.required, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
     }
     public func updateUIView(_ uiView: UILabel, context: Context) {
         uiView.attributedText = attributedText
         uiView.preferredMaxLayoutWidth = uiView.bounds.width
+    }
+    public func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
+        // Enable line wrapping by passing proposed width to the label
+        if let width = proposal.width, width.isFinite, width > 0 {
+            uiView.preferredMaxLayoutWidth = width
+            let size = uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
+            return size
+        }
+        return nil
     }
 }
 
