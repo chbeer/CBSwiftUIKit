@@ -306,7 +306,7 @@ public enum CBKeyboardHIDUsage: UInt16, @unchecked Sendable {
 
 #endif
 
-extension CBKeyboardHIDUsage: @retroactive CustomDebugStringConvertible {
+extension CBKeyboardHIDUsage: CustomDebugStringConvertible {
     
     public var debugDescription: String {
         switch self {

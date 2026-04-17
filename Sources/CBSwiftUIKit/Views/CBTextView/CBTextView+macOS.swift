@@ -54,7 +54,7 @@ extension CBTextView.Coordinator: NSTextViewDelegate {
     }
 
     public func textDidBeginEditing(_ notification: Notification) {
-        guard let textView = notification.object as? NSTextView else { return }
+        guard let _ = notification.object as? NSTextView else { return }
         
         parent.hasFocus = true
     }
